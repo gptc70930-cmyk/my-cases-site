@@ -896,16 +896,104 @@ function openCase(price = 499) {
         align-items:center;
         justify-content:center;
         font-size:80px;
-      ">
-        🎁
-      </div>
+<script>
+const skins = [
+  {
+    name: "AWP | Neo-Noir",
+    rarity: "Covert",
+    price: 4200,
+    emoji: "🔫"
+  },
+  {
+    name: "AK-47 | Bloodsport",
+    rarity: "Classified",
+    price: 2800,
+    emoji: "🔫"
+  },
+  {
+    name: "M4A1-S | Printstream",
+    rarity: "Classified",
+    price: 2300,
+    emoji: "🔫"
+  },
+  {
+    name: "USP-S | Printstream",
+    rarity: "Restricted",
+    price: 950,
+    emoji: "🔫"
+  },
+  {
+    name: "Glock-18 | Vogue",
+    rarity: "Restricted",
+    price: 650,
+    emoji: "🔫"
+  },
+  {
+    name: "MP9 | Starlight Protector",
+    rarity: "Mil-Spec",
+    price: 280,
+    emoji: "🔫"
+  }
+];
 
-      <div id="caseText" style="
-        font-size:20px;
-        font-weight:800;
-        min-height:60px;
-      ">
-        Открываем...
+let balance = 10000;
+
+function openCase(price = 499) {
+
+  if (balance < price) {
+    alert("Недостаточно виртуального баланса!");
+    return;
+  }
+
+  balance -= price;
+
+  const balanceElement = document.querySelector(".balance");
+
+  if (balanceElement) {
+    balanceElement.textContent =
+      balance.toLocaleString("ru-RU") + " ₽";
+  }
+
+  const winner =
+    skins[Math.floor(Math.random() * skins.length)];
+
+  const items = [];
+
+  // Создаём длинную ленту
+  for (let i = 0; i < 45; i++) {
+    items.push(
+      skins[Math.floor(Math.random() * skins.length)]
+    );
+  }
+
+  // Победитель примерно в центре
+  const winnerIndex = 36;
+  items[winnerIndex] = winner;
+
+  const modal = document.createElement("div");
+
+  modal.innerHTML = `
+    <div class="drop-overlay">
+
+      <div class="drop-window">
+
+        <div class="drop-title">
+          ОТКРЫТИЕ КЕЙСА
+        </div>
+
+        <div class="roulette">
+
+          <div class="pointer"></div>
+
+          <div class="roulette-track" id="rouletteTrack">
+          </div>
+
+        </div>
+
+        <div class="drop-status">
+          Открываем кейс...
+        </div>
+
       </div>
 
     </div>
@@ -913,86 +1001,82 @@ function openCase(price = 499) {
 
   document.body.appendChild(modal);
 
-  const animation = document.getElementById("caseAnimation");
-  const text = document.getElementById("caseText");
+  const track =
+    document.getElementById("rouletteTrack");
 
-  let counter = 0;
+  items.forEach((skin) => {
 
-  const interval = setInterval(() => {
+    const card = document.createElement("div");
 
-    const randomSkin =
-      skins[Math.floor(Math.random() * skins.length)];
+    card.className = "skin-card";
 
-    animation.textContent = randomSkin.emoji;
+    card.innerHTML = `
+      <div class="skin-image">
+        ${skin.emoji}
+      </div>
 
-    text.textContent = randomSkin.name;
+      <div class="skin-rarity">
+        ${skin.rarity}
+      </div>
 
-    animation.style.transform =
-      `scale(${1 + Math.random() * .25}) rotate(${Math.random()*10-5}deg)`;
+      <div class="skin-name">
+        ${skin.name}
+      </div>
 
-    counter++;
+      <div class="skin-price">
+        ${skin.price.toLocaleString("ru-RU")} ₽
+      </div>
+    `;
 
-    if (counter >= 25) {
+    track.appendChild(card);
 
-      clearInterval(interval);
+  });
 
-      setTimeout(() => {
+  // Размер одной карточки + расстояние
+  const cardWidth = 170;
 
-        animation.style.transform = "scale(1)";
+  // Центрируем победителя
+  const containerWidth =
+    document.querySelector(".roulette").offsetWidth;
 
-        animation.innerHTML = `
-          <div style="
-            width:120px;
-            height:120px;
-            border-radius:20px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            background:linear-gradient(135deg,#7c5cff,#00d4ff);
-            box-shadow:0 0 50px rgba(124,92,255,.5);
-          ">
-            ${result.emoji}
-          </div>
-        `;
+  const target =
+    winnerIndex * cardWidth -
+    containerWidth / 2 +
+    cardWidth / 2;
 
-        text.innerHTML = `
-          <div style="font-size:13px;color:#8d8d9b;margin-bottom:8px">
-            ${result.rarity}
-          </div>
+  setTimeout(() => {
 
-          <div style="font-size:24px">
-            ${result.name}
-          </div>
+    track.style.transform =
+      `translateX(-${target}px)`;
 
-          <div style="
-            color:#7c5cff;
-            font-size:20px;
-            margin-top:8px;
-          ">
-            ${result.price.toLocaleString("ru-RU")} ₽
-          </div>
+  }, 300);
 
-          <button
-            onclick="this.closest('div[style*=fixed]').remove()"
-            style="
-              margin-top:22px;
-              padding:13px 30px;
-              border:0;
-              border-radius:12px;
-              background:#fff;
-              color:#111;
-              font-weight:800;
-              cursor:pointer;
-            "
-          >
-            ЗАБРАТЬ
-          </button>
-        `;
+  setTimeout(() => {
 
-      }, 400);
-    }
+    document.querySelector(".drop-status").innerHTML = `
 
-  }, 100);
+      <div class="winner-rarity">
+        ${winner.rarity}
+      </div>
+
+      <div class="winner-name">
+        ${winner.name}
+      </div>
+
+      <div class="winner-price">
+        ${winner.price.toLocaleString("ru-RU")} ₽
+      </div>
+
+      <button
+        class="take-button"
+        onclick="this.closest('.drop-overlay').remove()"
+      >
+        ЗАБРАТЬ
+      </button>
+
+    `;
+
+  }, 5200);
 
 }
 </script>
