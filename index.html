@@ -798,37 +798,203 @@
 
 
 <script>
-  function openCase(caseName, itemName, price) {
-    const modal = document.getElementById("modal");
-    const name = document.getElementById("resultName");
-    const resultPrice = document.getElementById("resultPrice");
-    const icon = document.getElementById("resultIcon");
+const skins = [
+  {
+    name: "AWP | Neo-Noir",
+    rarity: "Covert",
+    price: 4200,
+    emoji: "🔫"
+  },
+  {
+    name: "AK-47 | Bloodsport",
+    rarity: "Classified",
+    price: 2800,
+    emoji: "🔫"
+  },
+  {
+    name: "M4A1-S | Printstream",
+    rarity: "Classified",
+    price: 2300,
+    emoji: "🔫"
+  },
+  {
+    name: "USP-S | Printstream",
+    rarity: "Restricted",
+    price: 950,
+    emoji: "🔫"
+  },
+  {
+    name: "Glock-18 | Vogue",
+    rarity: "Restricted",
+    price: 650,
+    emoji: "🔫"
+  },
+  {
+    name: "MP9 | Starlight Protector",
+    rarity: "Mil-Spec",
+    price: 280,
+    emoji: "🔫"
+  }
+];
 
-    name.textContent = itemName;
-    resultPrice.textContent = price;
+let balance = 10000;
 
-    if (itemName.includes("Karambit")) {
-      icon.textContent = "🔪";
-    } else if (itemName.includes("Gloves")) {
-      icon.textContent = "🧤";
-    } else if (itemName.includes("M4A1")) {
-      icon.textContent = "💎";
-    } else {
-      icon.textContent = "🔫";
-    }
+function openCase(price = 499) {
 
-    modal.classList.add("show");
+  if (balance < price) {
+    alert("Недостаточно виртуального баланса!");
+    return;
   }
 
-  function closeModal() {
-    document.getElementById("modal").classList.remove("show");
+  balance -= price;
+
+  const balanceElement = document.querySelector(".balance");
+
+  if (balanceElement) {
+    balanceElement.textContent =
+      balance.toLocaleString("ru-RU") + " ₽";
   }
 
-  document.getElementById("modal").addEventListener("click", function(e) {
-    if (e.target === this) {
-      closeModal();
+  const result = skins[Math.floor(Math.random() * skins.length)];
+
+  const modal = document.createElement("div");
+
+  modal.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    backdrop-filter:blur(10px);
+  `;
+
+  modal.innerHTML = `
+    <div style="
+      width:min(90%,500px);
+      background:#101016;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:24px;
+      padding:30px;
+      text-align:center;
+      box-shadow:0 0 80px rgba(124,92,255,.25);
+    ">
+
+      <div style="
+        font-size:12px;
+        letter-spacing:3px;
+        color:#888;
+        margin-bottom:20px;
+      ">
+        ОТКРЫТИЕ КЕЙСА
+      </div>
+
+      <div id="caseAnimation" style="
+        height:180px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:80px;
+      ">
+        🎁
+      </div>
+
+      <div id="caseText" style="
+        font-size:20px;
+        font-weight:800;
+        min-height:60px;
+      ">
+        Открываем...
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  const animation = document.getElementById("caseAnimation");
+  const text = document.getElementById("caseText");
+
+  let counter = 0;
+
+  const interval = setInterval(() => {
+
+    const randomSkin =
+      skins[Math.floor(Math.random() * skins.length)];
+
+    animation.textContent = randomSkin.emoji;
+
+    text.textContent = randomSkin.name;
+
+    animation.style.transform =
+      `scale(${1 + Math.random() * .25}) rotate(${Math.random()*10-5}deg)`;
+
+    counter++;
+
+    if (counter >= 25) {
+
+      clearInterval(interval);
+
+      setTimeout(() => {
+
+        animation.style.transform = "scale(1)";
+
+        animation.innerHTML = `
+          <div style="
+            width:120px;
+            height:120px;
+            border-radius:20px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:linear-gradient(135deg,#7c5cff,#00d4ff);
+            box-shadow:0 0 50px rgba(124,92,255,.5);
+          ">
+            ${result.emoji}
+          </div>
+        `;
+
+        text.innerHTML = `
+          <div style="font-size:13px;color:#8d8d9b;margin-bottom:8px">
+            ${result.rarity}
+          </div>
+
+          <div style="font-size:24px">
+            ${result.name}
+          </div>
+
+          <div style="
+            color:#7c5cff;
+            font-size:20px;
+            margin-top:8px;
+          ">
+            ${result.price.toLocaleString("ru-RU")} ₽
+          </div>
+
+          <button
+            onclick="this.closest('div[style*=fixed]').remove()"
+            style="
+              margin-top:22px;
+              padding:13px 30px;
+              border:0;
+              border-radius:12px;
+              background:#fff;
+              color:#111;
+              font-weight:800;
+              cursor:pointer;
+            "
+          >
+            ЗАБРАТЬ
+          </button>
+        `;
+
+      }, 400);
     }
-  });
+
+  }, 100);
+
+}
 </script>
 
 </body>
