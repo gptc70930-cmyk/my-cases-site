@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MYWORK — создание современных сайтов и цифровых продуктов.">
-  <title>MYWORK — Digital Studio</title>
+  <title>DROPZONE — CS2 Cases</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -17,15 +16,13 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      font-family: "Manrope", sans-serif;
-      background: #090909;
-      color: #f5f5f5;
-      line-height: 1.5;
+      font-family: Inter, sans-serif;
+      background:
+        radial-gradient(circle at 50% -10%, #26304a 0, transparent 35%),
+        #07090e;
+      color: #fff;
+      min-height: 100vh;
     }
 
     a {
@@ -33,295 +30,806 @@
       text-decoration: none;
     }
 
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
     .container {
-      width: min(1180px, calc(100% - 40px));
+      width: min(1180px, calc(100% - 28px));
       margin: auto;
     }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(9,9,9,.8);
+      z-index: 50;
+      background: rgba(7,9,14,.86);
       backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid #202532;
     }
 
     nav {
-      height: 76px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
     }
 
     .logo {
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 23px;
+      font-weight: 900;
       letter-spacing: -1px;
     }
 
     .logo span {
-      opacity: .45;
+      color: #7c5cff;
     }
 
-    .nav-links {
+    .links {
       display: flex;
-      gap: 32px;
-      color: #aaa;
-      font-size: 14px;
-    }
-
-    .nav-links a:hover {
-      color: white;
-    }
-
-    .nav-button {
-      padding: 11px 18px;
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 100px;
+      gap: 28px;
+      color: #9299aa;
       font-size: 13px;
-      transition: .25s;
+      font-weight: 600;
     }
 
-    .nav-button:hover {
-      background: white;
-      color: black;
+    .links a:hover {
+      color: #fff;
+    }
+
+    .balance {
+      padding: 10px 15px;
+      border: 1px solid #292f3d;
+      border-radius: 12px;
+      background: #10131b;
+      color: #aeb5c5;
+      font-size: 13px;
+    }
+
+    .balance strong {
+      color: #fff;
     }
 
     .hero {
-      min-height: 720px;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
+      padding: 70px 0 45px;
+      text-align: center;
     }
 
-    .hero:before {
-      content: "";
-      position: absolute;
-      width: 650px;
-      height: 650px;
-      background: radial-gradient(circle, rgba(255,255,255,.09), transparent 65%);
-      top: -200px;
-      right: -150px;
-      pointer-events: none;
-    }
-
-    .hero-content {
-      max-width: 900px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 13px;
-      border: 1px solid rgba(255,255,255,.12);
+    .tag {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid #30374a;
       border-radius: 100px;
-      color: #aaa;
-      font-size: 12px;
-      margin-bottom: 30px;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #8cff9a;
-      box-shadow: 0 0 12px #8cff9a;
+      color: #9ca4b7;
+      background: #0d1018;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     h1 {
-      font-size: clamp(55px, 9vw, 112px);
-      line-height: .93;
-      letter-spacing: -6px;
-      max-width: 1000px;
+      margin-top: 22px;
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: .95;
+      letter-spacing: -4px;
+      font-weight: 900;
     }
 
     h1 span {
-      color: #777;
+      color: #7c5cff;
+      text-shadow: 0 0 35px rgba(124,92,255,.35);
     }
 
-    .hero-text {
-      max-width: 570px;
-      margin-top: 32px;
-      color: #999;
-      font-size: 17px;
+    .hero p {
+      max-width: 560px;
+      margin: 22px auto 0;
+      color: #7f8799;
+      font-size: 15px;
+      line-height: 1.7;
     }
 
-    .hero-actions {
+    .stats {
       display: flex;
-      gap: 12px;
-      margin-top: 35px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
       justify-content: center;
-      padding: 15px 22px;
-      border-radius: 100px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: .25s;
+      gap: 10px;
+      margin-top: 30px;
+      flex-wrap: wrap;
     }
 
-    .button-primary {
-      background: white;
-      color: black;
+    .stat {
+      padding: 10px 16px;
+      background: #0e1118;
+      border: 1px solid #222837;
+      border-radius: 10px;
+      color: #8c94a7;
+      font-size: 12px;
     }
 
-    .button-primary:hover {
-      transform: translateY(-2px);
-    }
-
-    .button-secondary {
-      border: 1px solid rgba(255,255,255,.15);
-      color: #aaa;
-    }
-
-    .button-secondary:hover {
-      border-color: white;
+    .stat b {
       color: white;
     }
 
     section {
-      padding: 110px 0;
+      padding: 45px 0;
     }
 
-    .section-head {
+    .section-title {
       display: flex;
-      justify-content: space-between;
       align-items: end;
-      margin-bottom: 45px;
-      gap: 30px;
+      justify-content: space-between;
+      margin-bottom: 22px;
     }
 
-    .eyebrow {
-      color: #666;
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
+    .section-title h2 {
+      font-size: 28px;
+      letter-spacing: -1px;
     }
 
-    h2 {
-      font-size: clamp(35px, 5vw, 62px);
-      line-height: 1;
-      letter-spacing: -3px;
+    .section-title span {
+      color: #697184;
+      font-size: 12px;
     }
 
-    .section-description {
-      max-width: 400px;
-      color: #777;
-      font-size: 14px;
+    .categories {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    .category {
+      white-space: nowrap;
+      padding: 10px 15px;
+      border: 1px solid #242a38;
+      background: #0d1017;
+      border-radius: 9px;
+      color: #8991a4;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .category.active,
+    .category:hover {
+      color: #fff;
+      border-color: #6750dc;
+      background: #17132a;
     }
 
     .cases {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
 
     .case {
-      min-height: 470px;
-      border-radius: 24px;
-      overflow: hidden;
       position: relative;
-      background: #111;
-      border: 1px solid rgba(255,255,255,.07);
-      transition: .35s;
+      min-height: 285px;
+      overflow: hidden;
+      border: 1px solid #252b39;
+      border-radius: 15px;
+      background: linear-gradient(145deg,#151924,#0b0e14);
+      transition: .25s;
     }
 
     .case:hover {
-      transform: translateY(-7px);
-      border-color: rgba(255,255,255,.2);
+      transform: translateY(-5px);
+      border-color: #6750dc;
+      box-shadow: 0 15px 45px rgba(0,0,0,.3);
     }
 
-    .case-visual {
-      height: 330px;
-      position: relative;
-      overflow: hidden;
+    .case-top {
+      position: absolute;
+      top: 13px;
+      left: 13px;
+      z-index: 2;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: rgba(0,0,0,.4);
+      color: #9da5b7;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .case-art {
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(circle, rgba(124,92,255,.28), transparent 55%);
+    }
+
+    .case:nth-child(2) .case-art {
+      background:
+        radial-gradient(circle, rgba(255,117,74,.25), transparent 55%);
+    }
+
+    .case:nth-child(3) .case-art {
+      background:
+        radial-gradient(circle, rgba(42,211,176,.22), transparent 55%);
+    }
+
+    .case:nth-child(4) .case-art {
+      background:
+        radial-gradient(circle, rgba(240,74,167,.23), transparent 55%);
+    }
+
+    .box {
+      width: 105px;
+      height: 105px;
+      border: 1px solid #7c5cff;
+      border-radius: 16px;
+      background: linear-gradient(145deg,#30256b,#111322);
+      transform: rotate(-7deg);
+      box-shadow: 0 20px 50px rgba(124,92,255,.28);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 38px;
     }
 
-    .visual-one {
-      background:
-        radial-gradient(circle at 30% 30%, #5961ff, transparent 35%),
-        linear-gradient(135deg, #17172a, #050507);
+    .case:nth-child(2) .box {
+      border-color: #ff754a;
+      background: linear-gradient(145deg,#65301e,#15100f);
+      box-shadow: 0 20px 50px rgba(255,117,74,.22);
     }
 
-    .visual-two {
-      background:
-        radial-gradient(circle at 70% 30%, #ff9d5c, transparent 35%),
-        linear-gradient(135deg, #281c16, #080706);
+    .case:nth-child(3) .box {
+      border-color: #2ad3b0;
+      background: linear-gradient(145deg,#174f47,#0d1515);
     }
 
-    .visual-three {
-      background:
-        radial-gradient(circle at 40% 60%, #51e0c0, transparent 35%),
-        linear-gradient(135deg, #102522, #050807);
-    }
-
-    .visual-four {
-      background:
-        radial-gradient(circle at 65% 35%, #c47aff, transparent 35%),
-        linear-gradient(135deg, #24162e, #070509);
-    }
-
-    .visual-card {
-      width: 62%;
-      height: 58%;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.25);
-      background: rgba(255,255,255,.08);
-      backdrop-filter: blur(15px);
-      transform: rotate(-7deg);
-      box-shadow: 0 30px 80px rgba(0,0,0,.35);
-    }
-
-    .visual-card:after {
-      content: "";
-      display: block;
-      width: 45%;
-      height: 8px;
-      margin: 28px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.7);
-      box-shadow:
-        0 25px 0 rgba(255,255,255,.25),
-        0 50px 0 rgba(255,255,255,.12);
+    .case:nth-child(4) .box {
+      border-color: #f04aa7;
+      background: linear-gradient(145deg,#5d1943,#160d14);
     }
 
     .case-info {
-      padding: 24px;
+      padding: 16px;
+    }
+
+    .case-name {
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .case-desc {
+      margin-top: 5px;
+      color: #666f81;
+      font-size: 10px;
+    }
+
+    .case-bottom {
       display: flex;
       justify-content: space-between;
-      gap: 20px;
+      align-items: center;
+      margin-top: 14px;
     }
 
-    .case-title {
-      font-size: 21px;
-      font-weight: 700;
+    .price {
+      font-size: 13px;
+      font-weight: 800;
     }
 
-    .case-type {
-      color: #666;
-      font-size: 12px;
-      margin-top: 5px;
+    .open {
+      border: 0;
+      border-radius: 8px;
+      padding: 9px 13px;
+      background: #7658f4;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      transition: .2s;
     }
 
-    .case-arrow {
-      width: 42px;
-      height: 42px;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 50%;
+    .open:hover {
+      background: #8b72ff;
+      transform: scale(1.04);
+    }
+
+    .drops {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .skin {
+      padding: 15px;
+      min-height: 145px;
+      border: 1px solid #202633;
+      border-radius: 12px;
+      background: #0d1016;
+    }
+
+    .skin-image {
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 35px;
     }
+
+    .skin-name {
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .skin-price {
+      color: #697184;
+      font-size: 10px;
+      margin-top: 5px;
+    }
+
+    .purple {
+      border-color: rgba(160,80,255,.35);
+    }
+
+    .pink {
+      border-color: rgba(255,70,180,.35);
+    }
+
+    .red {
+      border-color: rgba(255,70,70,.35);
+    }
+
+    .info {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .info-card {
+      padding: 25px;
+      border: 1px solid #202633;
+      border-radius: 14px;
+      background: #0d1016;
+    }
+
+    .info-card b {
+      font-size: 15px;
+    }
+
+    .info-card p {
+      color: #687184;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 9px;
+    }
+
+    footer {
+      margin-top: 50px;
+      border-top: 1px solid #202633;
+      padding: 25px 0;
+      color: #545c6d;
+      font-size: 11px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(470px,100%);
+      padding: 35px;
+      text-align: center;
+      border: 1px solid #353c50;
+      border-radius: 20px;
+      background: #0d1018;
+      box-shadow: 0 30px 100px rgba(0,0,0,.6);
+    }
+
+    .modal-box h3 {
+      font-size: 25px;
+    }
+
+    .result {
+      margin: 25px 0;
+      padding: 25px;
+      border: 1px solid #7658f4;
+      border-radius: 14px;
+      background: #15112a;
+    }
+
+    .result-icon {
+      font-size: 55px;
+    }
+
+    .result-name {
+      margin-top: 10px;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .close {
+      border: 1px solid #303747;
+      background: transparent;
+      color: #a2a9b8;
+      padding: 11px 20px;
+      border-radius: 9px;
+    }
+
+    @media (max-width: 900px) {
+      .cases {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .drops {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .info {
+        grid-template-columns: 1fr;
+      }
+
+      .links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding-top: 50px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .cases {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+
+      .case {
+        min-height: 260px;
+      }
+
+      .case-art {
+        height: 155px;
+      }
+
+      .box {
+        width: 80px;
+        height: 80px;
+        font-size: 30px;
+      }
+
+      .case-info {
+        padding: 12px;
+      }
+
+      .case-name {
+        font-size: 12px;
+      }
+
+      .open {
+        padding: 8px 9px;
+      }
+
+      .drops {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .balance {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <a class="logo" href="#">DROP<span>ZONE</span></a>
+
+      <div class="links">
+        <a href="#cases">Кейсы</a>
+        <a href="#drops">Дропы</a>
+        <a href="#about">Как это работает</a>
+      </div>
+
+      <div class="balance">
+        Баланс: <strong>10 000 ₽</strong>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+
+      <div class="tag">CS2 CASE PLATFORM</div>
+
+      <h1>
+        Открой свой<br>
+        <span>легендарный дроп.</span>
+      </h1>
+
+      <p>
+        Виртуальные кейсы с коллекцией популярных
+        CS2-скинов. Выбирай кейс, открывай и собирай
+        свой инвентарь.
+      </p>
+
+      <div class="stats">
+        <div class="stat"><b>2 481</b> открытий сегодня</div>
+        <div class="stat"><b>128</b> предметов</div>
+        <div class="stat"><b>24/7</b> DROP</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section id="cases">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Кейсы</h2>
+        <span>Выбери свой дроп</span>
+      </div>
+
+      <div class="categories">
+        <div class="category active">Все</div>
+        <div class="category">Популярные</div>
+        <div class="category">Ножи</div>
+        <div class="category">Перчатки</div>
+        <div class="category">AK-47</div>
+        <div class="category">AWP</div>
+      </div>
+
+      <div class="cases">
+
+        <div class="case">
+          <div class="case-top">HOT</div>
+          <div class="case-art">
+            <div class="box">🔪</div>
+          </div>
+          <div class="case-info">
+            <div class="case-name">Shadow Case</div>
+            <div class="case-desc">Ножи · Перчатки · Редкие скины</div>
+            <div class="case-bottom">
+              <div class="price">499 ₽</div>
+              <button class="open" onclick="openCase('Shadow Case','🔪 Karambit | Night','12 450 ₽')">
+                ОТКРЫТЬ
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="case-top">NEW</div>
+          <div class="case-art">
+            <div class="box">🔫</div>
+          </div>
+          <div class="case-info">
+            <div class="case-name">Inferno Case</div>
+            <div class="case-desc">AK-47 · M4A1-S · AWP</div>
+            <div class="case-bottom">
+              <div class="price">299 ₽</div>
+              <button class="open" onclick="openCase('Inferno Case','🔫 AK-47 | Redline','4 890 ₽')">
+                ОТКРЫТЬ
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="case-top">POPULAR</div>
+          <div class="case-art">
+            <div class="box">💎</div>
+          </div>
+          <div class="case-info">
+            <div class="case-name">Emerald Drop</div>
+            <div class="case-desc">Rare · Epic · Legendary</div>
+            <div class="case-bottom">
+              <div class="price">799 ₽</div>
+              <button class="open" onclick="openCase('Emerald Drop','💎 M4A1-S | Printstream','9 990 ₽')">
+                ОТКРЫТЬ
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="case-top">EPIC</div>
+          <div class="case-art">
+            <div class="box">🧤</div>
+          </div>
+          <div class="case-info">
+            <div class="case-name">Royal Case</div>
+            <div class="case-desc">Перчатки · Ножи · Covert</div>
+            <div class="case-bottom">
+              <div class="price">1 499 ₽</div>
+              <button class="open" onclick="openCase('Royal Case','🧤 Sport Gloves | Vice','28 500 ₽')">
+                ОТКРЫТЬ
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section id="drops">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Последние дропы</h2>
+        <span>Что выпадает игрокам</span>
+      </div>
+
+      <div class="drops">
+
+        <div class="skin purple">
+          <div class="skin-image">🔫</div>
+          <div class="skin-name">AWP | Neo-Noir</div>
+          <div class="skin-price">≈ 3 200 ₽</div>
+        </div>
+
+        <div class="skin pink">
+          <div class="skin-image">🔪</div>
+          <div class="skin-name">Karambit | Fade</div>
+          <div class="skin-price">≈ 25 900 ₽</div>
+        </div>
+
+        <div class="skin red">
+          <div class="skin-image">🔫</div>
+          <div class="skin-name">AK-47 | Bloodsport</div>
+          <div class="skin-price">≈ 7 450 ₽</div>
+        </div>
+
+        <div class="skin purple">
+          <div class="skin-image">🔫</div>
+          <div class="skin-name">M4A1-S | Printstream</div>
+          <div class="skin-price">≈ 9 990 ₽</div>
+        </div>
+
+        <div class="skin pink">
+          <div class="skin-image">🧤</div>
+          <div class="skin-name">Sport Gloves | Vice</div>
+          <div class="skin-price">≈ 28 500 ₽</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section id="about">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Как это работает</h2>
+      </div>
+
+      <div class="info">
+
+        <div class="info-card">
+          <b>01 — Выбираешь кейс</b>
+          <p>
+            Найди кейс подходящей категории
+            и нажми кнопку открытия.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <b>02 — Открываешь</b>
+          <p>
+            Система показывает случайный
+            виртуальный предмет из коллекции кейса.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <b>03 — Собираешь коллекцию</b>
+          <p>
+            Полученные предметы отображаются
+            в твоём виртуальном инвентаре.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 DROPZONE</span>
+    <span>CS2 Case Experience · Demo</span>
+  </div>
+</footer>
+
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+
+    <h3>🎉 Дроп получен!</h3>
+
+    <div class="result">
+      <div class="result-icon" id="resultIcon">🔪</div>
+      <div class="result-name" id="resultName">
+        Karambit | Night
+      </div>
+      <div class="skin-price" id="resultPrice">
+        12 450 ₽
+      </div>
+    </div>
+
+    <button class="close" onclick="closeModal()">
+      Забрать в инвентарь
+    </button>
+
+  </div>
+</div>
+
+
+<script>
+  function openCase(caseName, itemName, price) {
+    const modal = document.getElementById("modal");
+    const name = document.getElementById("resultName");
+    const resultPrice = document.getElementById("resultPrice");
+    const icon = document.getElementById("resultIcon");
+
+    name.textContent = itemName;
+    resultPrice.textContent = price;
+
+    if (itemName.includes("Karambit")) {
+      icon.textContent = "🔪";
+    } else if (itemName.includes("Gloves")) {
+      icon.textContent = "🧤";
+    } else if (itemName.includes("M4A1")) {
+      icon.textContent = "💎";
+    } else {
+      icon.textContent = "🔫";
+    }
+
+    modal.classList.add("show");
+  }
+
+  function closeModal() {
+    document.getElementById("modal").classList.remove("show");
+  }
+
+  document.getElementById("modal").addEventListener("click", function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+</script>
+
+</body>
+</html>
