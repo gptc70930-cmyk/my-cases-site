@@ -1,60 +1,327 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MYWORK — Портфолио</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header>
-  <a class="logo" href="#">MY<span>WORK</span></a>
-  <nav><a href="#cases">Кейсы</a><a href="#about">О нас</a><a href="#contact">Контакты</a></nav>
-</header>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MYWORK — создание современных сайтов и цифровых продуктов.">
+  <title>MYWORK — Digital Studio</title>
 
-<main>
-<section class="hero">
-  <div class="eyebrow">PORTFOLIO · 2026</div>
-  <h1>Создаю сайты,<br>которые <em>работают.</em></h1>
-  <p>Веб-дизайн, разработка и цифровые продукты с фокусом на результат.</p>
-  <a class="btn" href="#cases">Смотреть кейсы ↓</a>
-</section>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<section id="cases" class="section">
-  <div class="eyebrow">01 — CASES</div>
-  <h2>Избранные проекты</h2>
-  <div class="grid">
-    <article class="case">
-      <div class="visual v1"><b>01</b><span>FINANCE</span></div>
-      <h3>Nova Finance</h3><p>Веб-сайт · UX/UI · Development</p>
-    </article>
-    <article class="case">
-      <div class="visual v2"><b>02</b><span>COFFEE</span></div>
-      <h3>Mono Coffee</h3><p>Брендинг · Web Design</p>
-    </article>
-    <article class="case">
-      <div class="visual v3"><b>03</b><span>FITNESS</span></div>
-      <h3>FitTrack</h3><p>Mobile App · UX/UI</p>
-    </article>
-    <article class="case">
-      <div class="visual v4"><b>04</b><span>ARCHITECTURE</span></div>
-      <h3>Architecture X</h3><p>Web · Development · Motion</p>
-    </article>
-  </div>
-</section>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<section id="about" class="about">
-  <div class="eyebrow">02 — ABOUT</div>
-  <h2>Помогаю компаниям выглядеть профессионально в интернете.</h2>
-</section>
+    html {
+      scroll-behavior: smooth;
+    }
 
-<section id="contact" class="contact">
-  <div class="eyebrow">03 — CONTACT</div>
-  <h2>Есть проект?</h2>
-  <a href="mailto:hello@example.com">hello@example.com ↗</a>
-</section>
-</main>
+    body {
+      font-family: "Manrope", sans-serif;
+      background: #090909;
+      color: #f5f5f5;
+      line-height: 1.5;
+    }
 
-<footer><span>© 2026 MYWORK</span><span>Made with HTML & CSS</span></footer>
-</body>
-</html>
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9,9,9,.8);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      opacity: .45;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .nav-button {
+      padding: 11px 18px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 100px;
+      font-size: 13px;
+      transition: .25s;
+    }
+
+    .nav-button:hover {
+      background: white;
+      color: black;
+    }
+
+    .hero {
+      min-height: 720px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero:before {
+      content: "";
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(255,255,255,.09), transparent 65%);
+      top: -200px;
+      right: -150px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 100px;
+      color: #aaa;
+      font-size: 12px;
+      margin-bottom: 30px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #8cff9a;
+      box-shadow: 0 0 12px #8cff9a;
+    }
+
+    h1 {
+      font-size: clamp(55px, 9vw, 112px);
+      line-height: .93;
+      letter-spacing: -6px;
+      max-width: 1000px;
+    }
+
+    h1 span {
+      color: #777;
+    }
+
+    .hero-text {
+      max-width: 570px;
+      margin-top: 32px;
+      color: #999;
+      font-size: 17px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 35px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 22px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: .25s;
+    }
+
+    .button-primary {
+      background: white;
+      color: black;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      border: 1px solid rgba(255,255,255,.15);
+      color: #aaa;
+    }
+
+    .button-secondary:hover {
+      border-color: white;
+      color: white;
+    }
+
+    section {
+      padding: 110px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 45px;
+      gap: 30px;
+    }
+
+    .eyebrow {
+      color: #666;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(35px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -3px;
+    }
+
+    .section-description {
+      max-width: 400px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .cases {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .case {
+      min-height: 470px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      background: #111;
+      border: 1px solid rgba(255,255,255,.07);
+      transition: .35s;
+    }
+
+    .case:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255,255,255,.2);
+    }
+
+    .case-visual {
+      height: 330px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .visual-one {
+      background:
+        radial-gradient(circle at 30% 30%, #5961ff, transparent 35%),
+        linear-gradient(135deg, #17172a, #050507);
+    }
+
+    .visual-two {
+      background:
+        radial-gradient(circle at 70% 30%, #ff9d5c, transparent 35%),
+        linear-gradient(135deg, #281c16, #080706);
+    }
+
+    .visual-three {
+      background:
+        radial-gradient(circle at 40% 60%, #51e0c0, transparent 35%),
+        linear-gradient(135deg, #102522, #050807);
+    }
+
+    .visual-four {
+      background:
+        radial-gradient(circle at 65% 35%, #c47aff, transparent 35%),
+        linear-gradient(135deg, #24162e, #070509);
+    }
+
+    .visual-card {
+      width: 62%;
+      height: 58%;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(15px);
+      transform: rotate(-7deg);
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    }
+
+    .visual-card:after {
+      content: "";
+      display: block;
+      width: 45%;
+      height: 8px;
+      margin: 28px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.7);
+      box-shadow:
+        0 25px 0 rgba(255,255,255,.25),
+        0 50px 0 rgba(255,255,255,.12);
+    }
+
+    .case-info {
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .case-title {
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .case-type {
+      color: #666;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .case-arrow {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
