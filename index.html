@@ -1,1084 +1,953 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DROPZONE — CS2 Cases</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Inter, sans-serif;
-      background:
-        radial-gradient(circle at 50% -10%, #26304a 0, transparent 35%),
-        #07090e;
-      color: #fff;
-      min-height: 100vh;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .container {
-      width: min(1180px, calc(100% - 28px));
-      margin: auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(7,9,14,.86);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid #202532;
-    }
-
-    nav {
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 23px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-
-    .logo span {
-      color: #7c5cff;
-    }
-
-    .links {
-      display: flex;
-      gap: 28px;
-      color: #9299aa;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .links a:hover {
-      color: #fff;
-    }
-
-    .balance {
-      padding: 10px 15px;
-      border: 1px solid #292f3d;
-      border-radius: 12px;
-      background: #10131b;
-      color: #aeb5c5;
-      font-size: 13px;
-    }
-
-    .balance strong {
-      color: #fff;
-    }
-
-    .hero {
-      padding: 70px 0 45px;
-      text-align: center;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 7px 12px;
-      border: 1px solid #30374a;
-      border-radius: 100px;
-      color: #9ca4b7;
-      background: #0d1018;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    h1 {
-      margin-top: 22px;
-      font-size: clamp(42px, 8vw, 82px);
-      line-height: .95;
-      letter-spacing: -4px;
-      font-weight: 900;
-    }
-
-    h1 span {
-      color: #7c5cff;
-      text-shadow: 0 0 35px rgba(124,92,255,.35);
-    }
-
-    .hero p {
-      max-width: 560px;
-      margin: 22px auto 0;
-      color: #7f8799;
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-
-    .stat {
-      padding: 10px 16px;
-      background: #0e1118;
-      border: 1px solid #222837;
-      border-radius: 10px;
-      color: #8c94a7;
-      font-size: 12px;
-    }
-
-    .stat b {
-      color: white;
-    }
-
-    section {
-      padding: 45px 0;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      margin-bottom: 22px;
-    }
-
-    .section-title h2 {
-      font-size: 28px;
-      letter-spacing: -1px;
-    }
-
-    .section-title span {
-      color: #697184;
-      font-size: 12px;
-    }
-
-    .categories {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 25px;
-    }
-
-    .category {
-      white-space: nowrap;
-      padding: 10px 15px;
-      border: 1px solid #242a38;
-      background: #0d1017;
-      border-radius: 9px;
-      color: #8991a4;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .category.active,
-    .category:hover {
-      color: #fff;
-      border-color: #6750dc;
-      background: #17132a;
-    }
-
-    .cases {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .case {
-      position: relative;
-      min-height: 285px;
-      overflow: hidden;
-      border: 1px solid #252b39;
-      border-radius: 15px;
-      background: linear-gradient(145deg,#151924,#0b0e14);
-      transition: .25s;
-    }
-
-    .case:hover {
-      transform: translateY(-5px);
-      border-color: #6750dc;
-      box-shadow: 0 15px 45px rgba(0,0,0,.3);
-    }
-
-    .case-top {
-      position: absolute;
-      top: 13px;
-      left: 13px;
-      z-index: 2;
-      padding: 5px 8px;
-      border-radius: 6px;
-      background: rgba(0,0,0,.4);
-      color: #9da5b7;
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .case-art {
-      height: 180px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background:
-        radial-gradient(circle, rgba(124,92,255,.28), transparent 55%);
-    }
-
-    .case:nth-child(2) .case-art {
-      background:
-        radial-gradient(circle, rgba(255,117,74,.25), transparent 55%);
-    }
-
-    .case:nth-child(3) .case-art {
-      background:
-        radial-gradient(circle, rgba(42,211,176,.22), transparent 55%);
-    }
-
-    .case:nth-child(4) .case-art {
-      background:
-        radial-gradient(circle, rgba(240,74,167,.23), transparent 55%);
-    }
-
-    .box {
-      width: 105px;
-      height: 105px;
-      border: 1px solid #7c5cff;
-      border-radius: 16px;
-      background: linear-gradient(145deg,#30256b,#111322);
-      transform: rotate(-7deg);
-      box-shadow: 0 20px 50px rgba(124,92,255,.28);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 38px;
-    }
-
-    .case:nth-child(2) .box {
-      border-color: #ff754a;
-      background: linear-gradient(145deg,#65301e,#15100f);
-      box-shadow: 0 20px 50px rgba(255,117,74,.22);
-    }
-
-    .case:nth-child(3) .box {
-      border-color: #2ad3b0;
-      background: linear-gradient(145deg,#174f47,#0d1515);
-    }
-
-    .case:nth-child(4) .box {
-      border-color: #f04aa7;
-      background: linear-gradient(145deg,#5d1943,#160d14);
-    }
-
-    .case-info {
-      padding: 16px;
-    }
-
-    .case-name {
-      font-weight: 800;
-      font-size: 15px;
-    }
-
-    .case-desc {
-      margin-top: 5px;
-      color: #666f81;
-      font-size: 10px;
-    }
-
-    .case-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 14px;
-    }
-
-    .price {
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .open {
-      border: 0;
-      border-radius: 8px;
-      padding: 9px 13px;
-      background: #7658f4;
-      color: white;
-      font-size: 11px;
-      font-weight: 800;
-      transition: .2s;
-    }
-
-    .open:hover {
-      background: #8b72ff;
-      transform: scale(1.04);
-    }
-
-    .drops {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-    }
-
-    .skin {
-      padding: 15px;
-      min-height: 145px;
-      border: 1px solid #202633;
-      border-radius: 12px;
-      background: #0d1016;
-    }
-
-    .skin-image {
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 35px;
-    }
-
-    .skin-name {
-      font-size: 11px;
-      font-weight: 700;
-      margin-top: 8px;
-    }
-
-    .skin-price {
-      color: #697184;
-      font-size: 10px;
-      margin-top: 5px;
-    }
-
-    .purple {
-      border-color: rgba(160,80,255,.35);
-    }
-
-    .pink {
-      border-color: rgba(255,70,180,.35);
-    }
-
-    .red {
-      border-color: rgba(255,70,70,.35);
-    }
-
-    .info {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .info-card {
-      padding: 25px;
-      border: 1px solid #202633;
-      border-radius: 14px;
-      background: #0d1016;
-    }
-
-    .info-card b {
-      font-size: 15px;
-    }
-
-    .info-card p {
-      color: #687184;
-      font-size: 12px;
-      line-height: 1.6;
-      margin-top: 9px;
-    }
-
-    footer {
-      margin-top: 50px;
-      border-top: 1px solid #202633;
-      padding: 25px 0;
-      color: #545c6d;
-      font-size: 11px;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(0,0,0,.75);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-box {
-      width: min(470px,100%);
-      padding: 35px;
-      text-align: center;
-      border: 1px solid #353c50;
-      border-radius: 20px;
-      background: #0d1018;
-      box-shadow: 0 30px 100px rgba(0,0,0,.6);
-    }
-
-    .modal-box h3 {
-      font-size: 25px;
-    }
-
-    .result {
-      margin: 25px 0;
-      padding: 25px;
-      border: 1px solid #7658f4;
-      border-radius: 14px;
-      background: #15112a;
-    }
-
-    .result-icon {
-      font-size: 55px;
-    }
-
-    .result-name {
-      margin-top: 10px;
-      font-size: 17px;
-      font-weight: 800;
-    }
-
-    .close {
-      border: 1px solid #303747;
-      background: transparent;
-      color: #a2a9b8;
-      padding: 11px 20px;
-      border-radius: 9px;
-    }
-
-    @media (max-width: 900px) {
-      .cases {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .drops {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .info {
-        grid-template-columns: 1fr;
-      }
-
-      .links {
-        display: none;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .hero {
-        padding-top: 50px;
-      }
-
-      h1 {
-        letter-spacing: -2px;
-      }
-
-      .cases {
-        grid-template-columns: 1fr 1fr;
-        gap: 9px;
-      }
-
-      .case {
-        min-height: 260px;
-      }
-
-      .case-art {
-        height: 155px;
-      }
-
-      .box {
-        width: 80px;
-        height: 80px;
-        font-size: 30px;
-      }
-
-      .case-info {
-        padding: 12px;
-      }
-
-      .case-name {
-        font-size: 12px;
-      }
-
-      .open {
-        padding: 8px 9px;
-      }
-
-      .drops {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .balance {
-        font-size: 11px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DROPZONE — CS2 Cases</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #08090e;
+  color: #fff;
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+}
+
+.header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6%;
+  border-bottom: 1px solid #20212b;
+  background: #0b0c12;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: #7c5cff;
+}
+
+.nav {
+  display: flex;
+  gap: 25px;
+}
+
+.nav a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav a:hover {
+  color: #fff;
+}
+
+.balance {
+  background: #171821;
+  border: 1px solid #292b38;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.hero {
+  padding: 80px 6% 45px;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  color: #9b8cff;
+  border: 1px solid #393064;
+  padding: 7px 14px;
+  border-radius: 30px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 8vw, 76px);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.hero h1 span {
+  color: #7c5cff;
+}
+
+.hero p {
+  color: #92939e;
+  max-width: 600px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+.section {
+  width: 88%;
+  max-width: 1200px;
+  margin: 0 auto 80px;
+}
+
+.section-title {
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-bottom: 25px;
+}
+
+.category {
+  background: #12131a;
+  border: 1px solid #252631;
+  color: #aaa;
+  padding: 10px 16px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.category.active {
+  background: #7c5cff;
+  border-color: #7c5cff;
+  color: white;
+}
+
+.cases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.case {
+  background: linear-gradient(145deg, #14151e, #0e0f15);
+  border: 1px solid #252631;
+  border-radius: 18px;
+  padding: 20px;
+  transition: .25s;
+}
+
+.case:hover {
+  transform: translateY(-6px);
+  border-color: #6650c8;
+}
+
+.case-art {
+  height: 180px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 75px;
+  background: radial-gradient(circle, #30245e, #11121a);
+  margin-bottom: 18px;
+}
+
+.case:nth-child(2) .case-art {
+  background: radial-gradient(circle, #143e49, #10151a);
+}
+
+.case:nth-child(3) .case-art {
+  background: radial-gradient(circle, #144d37, #101712);
+}
+
+.case:nth-child(4) .case-art {
+  background: radial-gradient(circle, #533b13, #17130c);
+}
+
+.case h3 {
+  margin-bottom: 8px;
+}
+
+.case p {
+  color: #777985;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.case-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.open-btn {
+  border: none;
+  background: #7c5cff;
+  color: white;
+  padding: 11px 15px;
+  border-radius: 9px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.open-btn:hover {
+  background: #9278ff;
+}
+
+.drops {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.drop {
+  background: #111219;
+  border: 1px solid #232530;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.drop-img {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+}
+
+.drop small {
+  color: #777985;
+}
+
+.drop strong {
+  display: block;
+  margin: 7px 0;
+  font-size: 13px;
+}
+
+.drop-price {
+  color: #8e7aff;
+  font-size: 13px;
+}
+
+.info {
+  background: #101118;
+  border: 1px solid #242631;
+  border-radius: 18px;
+  padding: 30px;
+  line-height: 1.7;
+  color: #999aa5;
+}
+
+.info h2 {
+  color: white;
+  margin-bottom: 12px;
+}
+
+.footer {
+  text-align: center;
+  padding: 35px;
+  color: #555762;
+  border-top: 1px solid #1c1d25;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.88);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 1050px;
+  background: #101117;
+  border: 1px solid #292b38;
+  border-radius: 22px;
+  padding: 25px;
+  overflow: hidden;
+  box-shadow: 0 30px 100px rgba(0,0,0,.7);
+}
+
+.modal-title {
+  text-align: center;
+  color: #999aa5;
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin-bottom: 22px;
+}
+
+.roulette {
+  position: relative;
+  height: 210px;
+  background: #08090e;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.pointer {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: white;
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px #7c5cff;
+}
+
+.pointer:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 13px solid white;
+}
+
+.track {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  height: 190px;
+  display: flex;
+  transform: translateX(0);
+  transition: transform 5s cubic-bezier(.08,.7,.12,1);
+}
+
+.roulette-card {
+  width: 170px;
+  min-width: 170px;
+  height: 190px;
+  padding: 15px;
+  text-align: center;
+  border-right: 1px solid #1e2029;
+  background: linear-gradient(
+    180deg,
+    rgba(124,92,255,.14),
+    rgba(255,255,255,.015)
+  );
+}
+
+.roulette-img {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+}
+
+.roulette-rarity {
+  color: #9b8cff;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.roulette-name {
+  margin-top: 7px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roulette-price {
+  color: #777985;
+  font-size: 12px;
+  margin-top: 7px;
+}
+
+.result {
+  text-align: center;
+  min-height: 100px;
+  padding-top: 20px;
+}
+
+.result-rarity {
+  color: #9b8cff;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.result-name {
+  font-size: 23px;
+  font-weight: bold;
+  margin-top: 7px;
+}
+
+.result-price {
+  color: #9b8cff;
+  font-size: 18px;
+  margin-top: 7px;
+}
+
+.take-btn {
+  margin-top: 15px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+
+  .nav {
+    display: none;
+  }
+
+  .cases {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .drops {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 550px) {
+
+  .header {
+    padding: 0 4%;
+  }
+
+  .balance {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .hero {
+    padding: 55px 5% 35px;
+  }
+
+  .section {
+    width: 92%;
+  }
+
+  .cases {
+    grid-template-columns: 1fr;
+  }
+
+  .drops {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .case-art {
+    height: 150px;
+  }
+
+  .modal-box {
+    padding: 15px 8px;
+  }
+
+  .roulette-card {
+    width: 145px;
+    min-width: 145px;
+  }
+
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="container">
-    <nav>
-      <a class="logo" href="#">DROP<span>ZONE</span></a>
+<header class="header">
 
-      <div class="links">
-        <a href="#cases">Кейсы</a>
-        <a href="#drops">Дропы</a>
-        <a href="#about">Как это работает</a>
-      </div>
-
-      <div class="balance">
-        Баланс: <strong>10 000 ₽</strong>
-      </div>
-    </nav>
+  <div class="logo">
+    DROP<span>ZONE</span>
   </div>
+
+  <nav class="nav">
+    <a href="#cases">Кейсы</a>
+    <a href="#drops">Дропы</a>
+    <a href="#how">Как это работает</a>
+  </nav>
+
+  <div class="balance" id="balance">
+    10 000 ₽
+  </div>
+
 </header>
 
-<main>
+<section class="hero">
 
-  <section class="hero">
-    <div class="container">
+  <div class="badge">
+    CS2 CASE PLATFORM
+  </div>
 
-      <div class="tag">CS2 CASE PLATFORM</div>
+  <h1>
+    Открой свой<br>
+    <span>легендарный дроп.</span>
+  </h1>
 
-      <h1>
-        Открой свой<br>
-        <span>легендарный дроп.</span>
-      </h1>
+  <p>
+    Открывай виртуальные кейсы, собирай коллекцию
+    и получай случайные CS2-скины в демо-инвентарь.
+  </p>
+
+</section>
+
+<section class="section" id="cases">
+
+  <h2 class="section-title">
+    Кейсы
+  </h2>
+
+  <div class="categories">
+    <div class="category active">Все</div>
+    <div class="category">Популярные</div>
+    <div class="category">Редкие</div>
+    <div class="category">Премиум</div>
+  </div>
+
+  <div class="cases">
+
+    <div class="case">
+
+      <div class="case-art">
+        🎁
+      </div>
+
+      <h3>Shadow Case</h3>
 
       <p>
-        Виртуальные кейсы с коллекцией популярных
-        CS2-скинов. Выбирай кейс, открывай и собирай
-        свой инвентарь.
+        Тёмная коллекция редких предметов.
       </p>
 
-      <div class="stats">
-        <div class="stat"><b>2 481</b> открытий сегодня</div>
-        <div class="stat"><b>128</b> предметов</div>
-        <div class="stat"><b>24/7</b> DROP</div>
-      </div>
+      <div class="case-bottom">
 
-    </div>
-  </section>
-
-
-  <section id="cases">
-    <div class="container">
-
-      <div class="section-title">
-        <h2>Кейсы</h2>
-        <span>Выбери свой дроп</span>
-      </div>
-
-      <div class="categories">
-        <div class="category active">Все</div>
-        <div class="category">Популярные</div>
-        <div class="category">Ножи</div>
-        <div class="category">Перчатки</div>
-        <div class="category">AK-47</div>
-        <div class="category">AWP</div>
-      </div>
-
-      <div class="cases">
-
-        <div class="case">
-          <div class="case-top">HOT</div>
-          <div class="case-art">
-            <div class="box">🔪</div>
-          </div>
-          <div class="case-info">
-            <div class="case-name">Shadow Case</div>
-            <div class="case-desc">Ножи · Перчатки · Редкие скины</div>
-            <div class="case-bottom">
-              <div class="price">499 ₽</div>
-              <button class="open" onclick="openCase('Shadow Case','🔪 Karambit | Night','12 450 ₽')">
-                ОТКРЫТЬ
-              </button>
-            </div>
-          </div>
+        <div class="price">
+          499 ₽
         </div>
 
-        <div class="case">
-          <div class="case-top">NEW</div>
-          <div class="case-art">
-            <div class="box">🔫</div>
-          </div>
-          <div class="case-info">
-            <div class="case-name">Inferno Case</div>
-            <div class="case-desc">AK-47 · M4A1-S · AWP</div>
-            <div class="case-bottom">
-              <div class="price">299 ₽</div>
-              <button class="open" onclick="openCase('Inferno Case','🔫 AK-47 | Redline','4 890 ₽')">
-                ОТКРЫТЬ
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="case">
-          <div class="case-top">POPULAR</div>
-          <div class="case-art">
-            <div class="box">💎</div>
-          </div>
-          <div class="case-info">
-            <div class="case-name">Emerald Drop</div>
-            <div class="case-desc">Rare · Epic · Legendary</div>
-            <div class="case-bottom">
-              <div class="price">799 ₽</div>
-              <button class="open" onclick="openCase('Emerald Drop','💎 M4A1-S | Printstream','9 990 ₽')">
-                ОТКРЫТЬ
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="case">
-          <div class="case-top">EPIC</div>
-          <div class="case-art">
-            <div class="box">🧤</div>
-          </div>
-          <div class="case-info">
-            <div class="case-name">Royal Case</div>
-            <div class="case-desc">Перчатки · Ножи · Covert</div>
-            <div class="case-bottom">
-              <div class="price">1 499 ₽</div>
-              <button class="open" onclick="openCase('Royal Case','🧤 Sport Gloves | Vice','28 500 ₽')">
-                ОТКРЫТЬ
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <section id="drops">
-    <div class="container">
-
-      <div class="section-title">
-        <h2>Последние дропы</h2>
-        <span>Что выпадает игрокам</span>
-      </div>
-
-      <div class="drops">
-
-        <div class="skin purple">
-          <div class="skin-image">🔫</div>
-          <div class="skin-name">AWP | Neo-Noir</div>
-          <div class="skin-price">≈ 3 200 ₽</div>
-        </div>
-
-        <div class="skin pink">
-          <div class="skin-image">🔪</div>
-          <div class="skin-name">Karambit | Fade</div>
-          <div class="skin-price">≈ 25 900 ₽</div>
-        </div>
-
-        <div class="skin red">
-          <div class="skin-image">🔫</div>
-          <div class="skin-name">AK-47 | Bloodsport</div>
-          <div class="skin-price">≈ 7 450 ₽</div>
-        </div>
-
-        <div class="skin purple">
-          <div class="skin-image">🔫</div>
-          <div class="skin-name">M4A1-S | Printstream</div>
-          <div class="skin-price">≈ 9 990 ₽</div>
-        </div>
-
-        <div class="skin pink">
-          <div class="skin-image">🧤</div>
-          <div class="skin-name">Sport Gloves | Vice</div>
-          <div class="skin-price">≈ 28 500 ₽</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <section id="about">
-    <div class="container">
-
-      <div class="section-title">
-        <h2>Как это работает</h2>
-      </div>
-
-      <div class="info">
-
-        <div class="info-card">
-          <b>01 — Выбираешь кейс</b>
-          <p>
-            Найди кейс подходящей категории
-            и нажми кнопку открытия.
-          </p>
-        </div>
-
-        <div class="info-card">
-          <b>02 — Открываешь</b>
-          <p>
-            Система показывает случайный
-            виртуальный предмет из коллекции кейса.
-          </p>
-        </div>
-
-        <div class="info-card">
-          <b>03 — Собираешь коллекцию</b>
-          <p>
-            Полученные предметы отображаются
-            в твоём виртуальном инвентаре.
-          </p>
-        </div>
+        <button class="open-btn"
+                onclick="openCase(499)">
+          Открыть
+        </button>
 
       </div>
 
     </div>
-  </section>
 
-</main>
+    <div class="case">
 
+      <div class="case-art">
+        🔥
+      </div>
 
-<footer>
-  <div class="container footer-inner">
-    <span>© 2026 DROPZONE</span>
-    <span>CS2 Case Experience · Demo</span>
+      <h3>Inferno Case</h3>
+
+      <p>
+        Огненная коллекция CS2.
+      </p>
+
+      <div class="case-bottom">
+
+        <div class="price">
+          299 ₽
+        </div>
+
+        <button class="open-btn"
+                onclick="openCase(299)">
+          Открыть
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="case">
+
+      <div class="case-art">
+        💎
+      </div>
+
+      <h3>Emerald Drop</h3>
+
+      <p>
+        Только самые красивые предметы.
+      </p>
+
+      <div class="case-bottom">
+
+        <div class="price">
+          799 ₽
+        </div>
+
+        <button class="open-btn"
+                onclick="openCase(799)">
+          Открыть
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="case">
+
+      <div class="case-art">
+        👑
+      </div>
+
+      <h3>Royal Case</h3>
+
+      <p>
+        Премиальная коллекция.
+      </p>
+
+      <div class="case-bottom">
+
+        <div class="price">
+          1 499 ₽
+        </div>
+
+        <button class="open-btn"
+                onclick="openCase(1499)">
+          Открыть
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
+
+</section>
+
+<section class="section" id="drops">
+
+  <h2 class="section-title">
+    Последние дропы
+  </h2>
+
+  <div class="drops">
+
+    <div class="drop">
+      <div class="drop-img">🔫</div>
+      <small>Covert</small>
+      <strong>AWP | Neo-Noir</strong>
+      <div class="drop-price">4 200 ₽</div>
+    </div>
+
+    <div class="drop">
+      <div class="drop-img">🔫</div>
+      <small>Classified</small>
+      <strong>AK-47 | Bloodsport</strong>
+      <div class="drop-price">2 800 ₽</div>
+    </div>
+
+    <div class="drop">
+      <div class="drop-img">🔫</div>
+      <small>Classified</small>
+      <strong>M4A1-S | Printstream</strong>
+      <div class="drop-price">2 300 ₽</div>
+    </div>
+
+    <div class="drop">
+      <div class="drop-img">🔫</div>
+      <small>Restricted</small>
+      <strong>USP-S | Printstream</strong>
+      <div class="drop-price">950 ₽</div>
+    </div>
+
+    <div class="drop">
+      <div class="drop-img">🔫</div>
+      <small>Restricted</small>
+      <strong>Glock-18 | Vogue</strong>
+      <div class="drop-price">650 ₽</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section" id="how">
+
+  <div class="info">
+
+    <h2>
+      Как это работает?
+    </h2>
+
+    <p>
+      Выбираешь кейс → нажимаешь «Открыть» →
+      запускается рулетка → получаешь случайный предмет.
+    </p>
+
+    <p style="margin-top:10px">
+      Этот сайт работает как демонстрация интерфейса.
+      Баланс и предметы виртуальные.
+    </p>
+
+  </div>
+
+</section>
+
+<footer class="footer">
+  DROPZONE © 2026 — CS2 CASE DEMO
 </footer>
 
 
-<div class="modal" id="modal">
-  <div class="modal-box">
-
-    <h3>🎉 Дроп получен!</h3>
-
-    <div class="result">
-      <div class="result-icon" id="resultIcon">🔪</div>
-      <div class="result-name" id="resultName">
-        Karambit | Night
-      </div>
-      <div class="skin-price" id="resultPrice">
-        12 450 ₽
-      </div>
-    </div>
-
-    <button class="close" onclick="closeModal()">
-      Забрать в инвентарь
-    </button>
-
-  </div>
-</div>
-
-
 <script>
+
 const skins = [
+
   {
     name: "AWP | Neo-Noir",
     rarity: "Covert",
     price: 4200,
     emoji: "🔫"
   },
+
   {
     name: "AK-47 | Bloodsport",
     rarity: "Classified",
     price: 2800,
     emoji: "🔫"
   },
+
   {
     name: "M4A1-S | Printstream",
     rarity: "Classified",
     price: 2300,
     emoji: "🔫"
   },
+
   {
     name: "USP-S | Printstream",
     rarity: "Restricted",
     price: 950,
     emoji: "🔫"
   },
+
   {
     name: "Glock-18 | Vogue",
     rarity: "Restricted",
     price: 650,
     emoji: "🔫"
   },
+
   {
     name: "MP9 | Starlight Protector",
     rarity: "Mil-Spec",
     price: 280,
     emoji: "🔫"
   }
+
 ];
 
 let balance = 10000;
 
-function openCase(price = 499) {
+
+function openCase(price) {
 
   if (balance < price) {
+
     alert("Недостаточно виртуального баланса!");
+
     return;
   }
 
-  balance -= price;
-
-  const balanceElement = document.querySelector(".balance");
-
-  if (balanceElement) {
-    balanceElement.textContent =
-      balance.toLocaleString("ru-RU") + " ₽";
-  }
-
-  const result = skins[Math.floor(Math.random() * skins.length)];
-
-  const modal = document.createElement("div");
-
-  modal.style.cssText = `
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.85);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-    backdrop-filter:blur(10px);
-  `;
-
-  modal.innerHTML = `
-    <div style="
-      width:min(90%,500px);
-      background:#101016;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:24px;
-      padding:30px;
-      text-align:center;
-      box-shadow:0 0 80px rgba(124,92,255,.25);
-    ">
-
-      <div style="
-        font-size:12px;
-        letter-spacing:3px;
-        color:#888;
-        margin-bottom:20px;
-      ">
-        ОТКРЫТИЕ КЕЙСА
-      </div>
-
-      <div id="caseAnimation" style="
-        height:180px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:80px;
-<script>
-const skins = [
-  {
-    name: "AWP | Neo-Noir",
-    rarity: "Covert",
-    price: 4200,
-    emoji: "🔫"
-  },
-  {
-    name: "AK-47 | Bloodsport",
-    rarity: "Classified",
-    price: 2800,
-    emoji: "🔫"
-  },
-  {
-    name: "M4A1-S | Printstream",
-    rarity: "Classified",
-    price: 2300,
-    emoji: "🔫"
-  },
-  {
-    name: "USP-S | Printstream",
-    rarity: "Restricted",
-    price: 950,
-    emoji: "🔫"
-  },
-  {
-    name: "Glock-18 | Vogue",
-    rarity: "Restricted",
-    price: 650,
-    emoji: "🔫"
-  },
-  {
-    name: "MP9 | Starlight Protector",
-    rarity: "Mil-Spec",
-    price: 280,
-    emoji: "🔫"
-  }
-];
-
-let balance = 10000;
-
-function openCase(price = 499) {
-
-  if (balance < price) {
-    alert("Недостаточно виртуального баланса!");
-    return;
-  }
 
   balance -= price;
 
-  const balanceElement = document.querySelector(".balance");
 
-  if (balanceElement) {
-    balanceElement.textContent =
-      balance.toLocaleString("ru-RU") + " ₽";
-  }
+  document.getElementById("balance").textContent =
+    balance.toLocaleString("ru-RU") + " ₽";
+
 
   const winner =
     skins[Math.floor(Math.random() * skins.length)];
 
-  const items = [];
 
-  // Создаём длинную ленту
-  for (let i = 0; i < 45; i++) {
-    items.push(
-      skins[Math.floor(Math.random() * skins.length)]
-    );
-  }
+  const modal =
+    document.createElement("div");
 
-  // Победитель примерно в центре
-  const winnerIndex = 36;
-  items[winnerIndex] = winner;
+  modal.className = "modal";
 
-  const modal = document.createElement("div");
 
   modal.innerHTML = `
-    <div class="drop-overlay">
 
-      <div class="drop-window">
+    <div class="modal-box">
 
-        <div class="drop-title">
-          ОТКРЫТИЕ КЕЙСА
-        </div>
+      <div class="modal-title">
+        ОТКРЫТИЕ КЕЙСА
+      </div>
 
-        <div class="roulette">
+      <div class="roulette">
 
-          <div class="pointer"></div>
+        <div class="pointer"></div>
 
-          <div class="roulette-track" id="rouletteTrack">
-          </div>
+        <div class="track" id="track"></div>
 
-        </div>
+      </div>
 
-        <div class="drop-status">
-          Открываем кейс...
-        </div>
-
+      <div class="result" id="result">
+        <span style="color:#777">
+          Открываем...
+        </span>
       </div>
 
     </div>
+
   `;
+
 
   document.body.appendChild(modal);
 
+
   const track =
-    document.getElementById("rouletteTrack");
+    document.getElementById("track");
 
-  items.forEach((skin) => {
 
-    const card = document.createElement("div");
+  const cards = [];
 
-    card.className = "skin-card";
+  for (let i = 0; i < 45; i++) {
+
+    let skin;
+
+    if (i === 36) {
+
+      skin = winner;
+
+    } else {
+
+      skin =
+        skins[Math.floor(Math.random() * skins.length)];
+
+    }
+
+    cards.push(skin);
+
+  }
+
+
+  cards.forEach((skin) => {
+
+    const card =
+      document.createElement("div");
+
+    card.className = "roulette-card";
+
 
     card.innerHTML = `
-      <div class="skin-image">
+
+      <div class="roulette-img">
         ${skin.emoji}
       </div>
 
-      <div class="skin-rarity">
+      <div class="roulette-rarity">
         ${skin.rarity}
       </div>
 
-      <div class="skin-name">
+      <div class="roulette-name">
         ${skin.name}
       </div>
 
-      <div class="skin-price">
+      <div class="roulette-price">
         ${skin.price.toLocaleString("ru-RU")} ₽
       </div>
+
     `;
+
 
     track.appendChild(card);
 
   });
 
-  // Размер одной карточки + расстояние
+
+  /*
+    Важно:
+    ширина карточки = 170px
+    победитель = карточка №36
+  */
+
   const cardWidth = 170;
 
-  // Центрируем победителя
-  const containerWidth =
+  const rouletteWidth =
     document.querySelector(".roulette").offsetWidth;
 
   const target =
-    winnerIndex * cardWidth -
-    containerWidth / 2 +
-    cardWidth / 2;
+    (36 * cardWidth)
+    -
+    (rouletteWidth / 2)
+    +
+    (cardWidth / 2);
+
 
   setTimeout(() => {
 
     track.style.transform =
-      `translateX(-${target}px)`;
+      "translateX(-" + target + "px)";
 
   }, 300);
 
+
   setTimeout(() => {
 
-    document.querySelector(".drop-status").innerHTML = `
+    document.getElementById("result").innerHTML = `
 
-      <div class="winner-rarity">
+      <div class="result-rarity">
         ${winner.rarity}
       </div>
 
-      <div class="winner-name">
+      <div class="result-name">
         ${winner.name}
       </div>
 
-      <div class="winner-price">
+      <div class="result-price">
         ${winner.price.toLocaleString("ru-RU")} ₽
       </div>
 
       <button
-        class="take-button"
-        onclick="this.closest('.drop-overlay').remove()"
+        class="take-btn"
+        onclick="this.closest('.modal').remove()"
       >
         ЗАБРАТЬ
       </button>
 
     `;
 
-  }, 5200);
+  }, 5500);
 
 }
+
 </script>
 
 </body>
